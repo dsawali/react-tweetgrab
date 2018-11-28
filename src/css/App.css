@@ -30,11 +30,32 @@ body {
   width: 100px;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+/*Create a custom scrollbar*/
+/* #tweet-wrapper {
+  display: inline-block;
+  height: calc(100vh - 190px);
+  padding: 0px 10px;
+  overflow: hidden;
 }
 
-.App-link {
-  color: #61dafb;
+#tweet-wrapper:hover {
+  overflow-y: auto;
 }
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 20px;
+  background: #d8d8d8;
+}
+
+::-webkit-scrollbar-thumb{
+  border-radius: 20px;
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+} */
