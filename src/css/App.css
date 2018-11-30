@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css?family=Arvo');
+
+body {
+  background-color: #282c34;
+  font-size: 30px;
+}
+
+.App {
+  text-align: center;
+  font-family: 'Arvo', serif;
+  color: #61dafb;
+}
+.display-row {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+.search-box {
+  padding-left: 5px;
+  display: inline-block;
+  height: 38px;
+  width: 300px;
+  font-size: 19px;
+}
+.search-context {
+  display: inline-block;
+  font-size: 15px;
+  height: 45px;
+  width: 100px;
+}
+
+/*Create a custom scrollbar*/
+#tweet-wrapper {
+  display: inline-block;
+  height: calc(100vh - 218px);
+  padding: 0px 10px;
+  overflow: auto;
+}
+
+#tweet-wrapper::-webkit-scrollbar,
+#tweet-wrapper::-webkit-scrollbar-track,
+#tweet-wrapper::-webkit-scrollbar-thumb,
+#tweet-wrapper::-webkit-scrollbar-thumb:hover{
+  width: 4px;
+  border-radius: 20px;
+  background: transparent;
+}
+
+#tweet-wrapper:hover::-webkit-scrollbar {
+  width: 5px;
+  border-radius: 20px;
+}
+
+#tweet-wrapper:hover::-webkit-scrollbar-track {
+  background: #d8d8d8;
+}
+
+#tweet-wrapper:hover::-webkit-scrollbar-thumb{
+  background: #888;
+}
+
+#tweet-wrapper:hover::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
