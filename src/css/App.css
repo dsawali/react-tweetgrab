@@ -31,31 +31,35 @@ body {
 }
 
 /*Create a custom scrollbar*/
-/* #tweet-wrapper {
+#tweet-wrapper {
   display: inline-block;
-  height: calc(100vh - 190px);
+  height: calc(100vh - 218px);
   padding: 0px 10px;
-  overflow: hidden;
+  overflow: auto;
 }
 
-#tweet-wrapper:hover {
-  overflow-y: auto;
-}
-
-::-webkit-scrollbar {
+#tweet-wrapper::-webkit-scrollbar,
+#tweet-wrapper::-webkit-scrollbar-track,
+#tweet-wrapper::-webkit-scrollbar-thumb,
+#tweet-wrapper::-webkit-scrollbar-thumb:hover{
   width: 4px;
+  border-radius: 20px;
+  background: transparent;
 }
 
-::-webkit-scrollbar-track {
+#tweet-wrapper:hover::-webkit-scrollbar {
+  width: 5px;
   border-radius: 20px;
+}
+
+#tweet-wrapper:hover::-webkit-scrollbar-track {
   background: #d8d8d8;
 }
 
-::-webkit-scrollbar-thumb{
-  border-radius: 20px;
+#tweet-wrapper:hover::-webkit-scrollbar-thumb{
   background: #888;
 }
 
-::-webkit-scrollbar-thumb:hover {
+#tweet-wrapper:hover::-webkit-scrollbar-thumb:hover {
   background: #555;
-} */
+}
