@@ -20,11 +20,43 @@ document.addEventListener("DOMContentLoaded", function (event) {
 });
 
 export default class Container extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            option: 'hashtag'
+        }
+        this.getOption = this.getOption.bind(this);
+        this.sendQuery = this.sendQuery.bind(this);
+    }
+
+    getOption(event){
+        this.setState({ option: event.target.value });
+    }
+
+    sendQuery(queryTest){
+        const queryData = { "searchData": queryTest, "optionData": this.state.option };
+        fetch('/search', {
+            method: 'POST',
+            body: JSON.stringify(queryData),
+            headers: { "Content-Type": "application/json" }
+        }).then((response) => {
+            return response.json();
+        }).then((responseJson) => {
+            const numberRegex = /^[0-9]*$/;
+            const id = responseJson.id;
+            if (id.match(numberRegex)) {
+                createTweet(id);
+            } else {
+                alert(id);
+            }
+        });
+    }
+
     render() {
         return (
             <div className="display-row">
-                <SearchBox />
-                <OptionBox />
+                <SearchBox sendQuery={this.sendQuery}/>
+                <OptionBox getOption={this.getOption}/>
             </div>
         );
     }
@@ -36,67 +68,34 @@ class SearchBox extends Component {
         this.state = {
             query: ''
         }
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-    handleChange(event) {
-        this.setState({ query: event.target.value });
+        this.handleEvent = this.handleEvent.bind(this);
     }
 
-    handleSubmit(event) {
-        event.preventDefault();
-        // alert('Query is : ' + this.state.query);
-        let searchData = { "searchData": this.state.query };
-        fetch('/search', {
-            method: 'POST',
-            body: JSON.stringify(searchData),
-            headers: { "Content-Type": "application/json" }
-        }).then((response) => {
-            return response.json();
-        }).then((responseJson) => {
-            const numberRegex = /^[0-9]*$/;
-            let id = responseJson.id;
-            if (id.match(numberRegex)) {
-                createTweet(id);
-            } else {
-                alert(id);
-            }
-        });
+    handleEvent(event){
+        switch(event.type){
+            case "change":
+                return this.setState({ query: event.target.value });
+            case "submit":
+                event.preventDefault();
+                return this.props.sendQuery(this.state.query);
+        }
     }
 
     render() {
         return (
             <div>
-                <form onSubmit={this.handleSubmit}>
-                    <input type="text" className="search-box" onChange={this.handleChange} value={this.state.value} />
+                <form onSubmit={this.handleEvent}>
+                    <input type="text" className="search-box" onChange={this.handleEvent} value={this.state.value} />
                 </form>
             </div>
         );
     }
 }
 class OptionBox extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            context: 'hashtag'
-        };
-        this.handleChange = this.handleChange.bind(this);
-    }
-
-    handleChange(event) {
-        this.setState({ context: event.target.value });
-        let optionData = { "optionData": event.target.value };
-        fetch('/option', {
-            method: 'POST',
-            body: JSON.stringify(optionData),
-            headers: { "Content-Type": "application/json" }
-        });
-    }
-
     render() {
         return (
             <div>
-                <select className="search-context" onChange={this.handleChange} value={this.state.value}>
+                <select className="search-context" onChange={this.props.getOption}>
                     <option value="hashtag">hashtag</option>
                     <option value="user">user</option>
                     <option value="text">text</option>
@@ -107,11 +106,11 @@ class OptionBox extends Component {
 }
 
 function createTweet(id) {
-    let wrapperClass = document.getElementById('tweet-wrapper');
-    let containerId = 'tweet-' + (document.getElementsByClassName('tweet-container')).length;
+    const wrapperClass = document.getElementById('tweet-wrapper');
+    const containerId = 'tweet-' + (document.getElementsByClassName('tweet-container')).length;
 
     //Create new div element
-    let tweetContainer = document.createElement('div');
+    const tweetContainer = document.createElement('div');
     tweetContainer.class = 'tweet-container';
     tweetContainer.id = containerId;
 
